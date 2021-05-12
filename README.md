@@ -17,16 +17,13 @@ A simple static Web App that will keep checking for available vaccine slots base
 
 ### Screenshots
 
-**App checking for slots every 20 Seconds**
-<img src="https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/NoSlotsFound.png" width="200" />
+> **App checking for slots every 20 Seconds**
+<img src="https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/NoSlotsFound.png" width="500" />
 
-**App checking for slots every 20 Seconds**
-![App - Running every 20 Seconds](https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/NoSlotsFound.png "App - Running every 20 Seconds")
+> **Alert When Slots are Found**
+<img src="https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/AlertForSlotsFound.png" width="500" />
 
-**Alert When Slots are Found**
-![Alert When Slots are Found](https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/AlertForSlotsFound.png "Alert When Slots are Found")
-
-**Message on Screen when slots Found**
-![Message on Screen when slots Found](https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/SlotsFound.png "Message on Screen when slots Found")
+> **Message on Screen when slots Found**
+<img src="https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/SlotsFound.png" width="500" />
 
 Note :: If any available slots are found, it will beep & stop searching and you will have to click on 'Run' again.
