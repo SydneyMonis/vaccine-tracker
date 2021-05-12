@@ -10,7 +10,7 @@ A simple static Web App that will keep checking for available vaccine slots base
 
 ### How To Use
 
-+ Download from [Here](https://github.com/pandao/editor.md "Download Link")
++ Download from [Here](https://github.com/SydneyMonis/vaccine-tracker/archive/refs/heads/main.zip "Download Link")
 + Extract the .zip contents.
 + Click on index.html (It should automatically open in a browser).
 + Select your criteria and click on 'Run'.
