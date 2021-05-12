@@ -63,6 +63,12 @@
 			alert('You have entered both the Pincode & District. Only Pincode will be considered.')
 			district = '';
 		}
+
+		if(frequency < 10) {
+			alert('Frequency less than 10 would just load up the server unnecessarily.');
+			return;
+		}
+
 		$('.console').empty();
 		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, $('.console'), $('.announcement'), playSound);
 

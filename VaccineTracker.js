@@ -27,7 +27,7 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
     window.cron = null;
     /*******************************Methods*************************************************/
 
-    const fetchData = queryParams => fetch(`${url}?${queryParams}`).then(response => response.json());
+    const fetchData = queryParams => fetch(`${url}?${queryParams}`).then(response => response.json()).catch( err => $appender.prepend('<p>Failed to Access the CoWin API. Make sure you are connected to the internet and are not on any VPN.</p>'));
 
     const showDataFor18Plus = (data, totalCenters, totalSessions) => {
         if (data.length === 0) {
