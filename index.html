@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Vaccine Tracker</title>
+	<script src='VaccineTracker.js' ></script>
+	<script src='districts.js' ></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js' ></script>
+	<audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
+<body>
+
+<span class='bold'>Date :</span> <input type='date' name='date' />
+<br/><br/>
+<span class='bold'>Pincode : </span><input type='text' name='pinCode'> OR <span class='bold'>District : </span><select name='districtId' class='districtId'>
+	<option value=''></option>
+</select>
+
+<br/><br/>
+<span class='bold'>Check for 18+ : </span><input type='checkbox' name='checkFor18Plus' checked>
+<br/><br/>
+<span class='bold'>Check for 45+ : </span><input type='checkbox' name='checkFor45Plus'>
+<br/><br/>
+<span class='bold'>Frequency (Seconds) : </span><input type='number' name='frequency' min='10' value='20' />
+<br /><br />
+<button onclick='validateAndRun()' >Run</button>
+<br /><br /><br/>
+<p class='bold announcement'></p>
+<br /><br /><br/>
+<div class='console'>
+
+</div>
+
+
+
+<script type='text/javascript'>
+	const today = (new Date()).toISOString().split('T')[0]
+	$('[name=date]').val(today);
+	$(function() {
+		initializeDistricts();
+	});
+
+	const initializeDistricts = () => {
+		window.districts.sort( (dis1, dis2) => dis1.district_name.localeCompare(dis2.district_name)).forEach( dis => $('.districtId').append(`<option value='${dis.district_id}'>${dis.district_name}</option>`))
+	}
+
+	const validateAndRun = () => {
+		let date = $('[name=date]').val();
+		date = getFormattedDate(date);
+		let pinCode = $('[name=pinCode]').val();
+		let district = $('[name=districtId]').val();
+		let checkFor18Plus = $('[name=checkFor18Plus]').is(':checked');
+		let checkFor45Plus = $('[name=checkFor45Plus]').is(':checked');
+		let frequency = $('[name=frequency]').val();
+		
+		if(pinCode.length === 0 && district.length === 0) {
+			alert('Either enter a Pincode or select a District');
+			return;
+		}
+		if(checkFor18Plus === false && checkFor45Plus === false) {
+			alert('Select atleast 1 age group');
+			return;
+		}
+		if(pinCode.length > 0 && district.length > 0) {
+			alert('You have entered both the Pincode & District. Only Pincode will be considered.')
+			district = '';
+		}
+		$('.console').empty();
+		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, $('.console'), $('.announcement'), playSound);
+
+	}
+
+	// Format Date to DD-MM-YYYY
+	const getFormattedDate = date => {
+		date = (new Date(date));
+		let formattedDate = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+		formattedDate += '-';
+		formattedDate += (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1);
+		formattedDate += '-';
+		formattedDate += date.getFullYear();
+		return formattedDate;
+	}
+
+	const playSound = () => {
+        var sound = document.getElementById("audio");
+        sound.play()
+    }
+</script>
+<style>
+	.bold {
+		font-weight: bold;
+	}
+</style>
+</body>
+</html>
