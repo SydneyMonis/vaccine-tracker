@@ -9,10 +9,14 @@ A simple static Web App that will keep checking for available vaccine slots base
 - Get an alert and a beep when vaccine slots are found.
 
 **Screenshots**
+![App - Running every 20 Seconds](../img/NoSlotsFound.png "App - Running every 20 Seconds")
+
+![Alert When Slots are Found](https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/AlertForSlotsFound.png "Alert When Slots are Found")
+
+![Message on Screen when slots Found](https://github.com/SydneyMonis/vaccine-tracker/blob/main/img/SlotsFound.png "Message on Screen when slots Found")
 
 **How To Use**
 
-+ Download from here : https://github.com/SydneyMonis/vaccine-tracker/archive/refs/heads/main.zip
 + Download from [Here](https://github.com/pandao/editor.md "Download Link")
 + Extract the .zip contents.
 + Click on index.html (It should automatically open in a browser).
