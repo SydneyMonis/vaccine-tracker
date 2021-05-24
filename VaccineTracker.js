@@ -7,7 +7,7 @@
 // @grant        none
 // ==/UserScript==
 
-window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, $appender, $announcement, onSuccess) => {
+window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, $appender, $announcement, onSuccess) => {
     /****************************Variables****************************************************/
     let searchByPinCode = pinCode.length > 0; // If false, it will search by the District ID
     let searchByDistrict = !searchByPinCode;
@@ -15,12 +15,16 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
     	alert('Please Enter a valid District ID');
     	return;
     }
+    
     const today = new Date();
     date = date === 'TODAY' ? `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}` : date;
     const PROTOCOL = 'https://';
     const SUBDOMAIN = 'cdn-api';
     const DOMAIN = 'co-vin.in';
     const API_PREFIX = '/api/v2';
+    const BOTH_DOSES = 0;
+    const DOSE_1_ONLY = 1;
+    const DOSE_2_ONLY = 2;
     let url = searchByPinCode ? `${PROTOCOL}${SUBDOMAIN}.${DOMAIN}${API_PREFIX}/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${date}` :
     	`${PROTOCOL}${SUBDOMAIN}.${DOMAIN}${API_PREFIX}/appointment/sessions/public/calendarByDistrict?district_id=${districtId}&date=${date}`;
     clearInterval(window.cron);
@@ -89,6 +93,12 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
             	totalCenters++;
                 let sessionsWithAvailableSlots = center.sessions.filter(session => {
                 	++totalSessions;
+                	if(whichDose === DOSE_1_ONLY) {
+                		return session.available_capacity_dose1 > 0
+                	} else if(whichDose === DOSE_2_ONLY) {
+                		return session.available_capacity_dose2 > 0
+                		
+                	}
                 	return session.available_capacity > 0
                 });
                 if (sessionsWithAvailableSlots.length > 0) {
