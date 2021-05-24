@@ -5,7 +5,7 @@
 	<script src='VaccineTracker.js' ></script>
 	<script src='districts.js' ></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js' ></script>
-	<audio id="audio" src="http://www.soundjay.com/button/beep-07.wav" autostart="false" ></audio>
+	<audio id="audio" src="https://www.soundjay.com/buttons/button-7.wav" autostart="false" ></audio>
 <body>
 
 <span class='bold'>Date :</span> <input type='date' name='date' />
@@ -18,6 +18,12 @@
 <span class='bold'>Check for 18+ : </span><input type='checkbox' name='checkFor18Plus' checked>
 <br/><br/>
 <span class='bold'>Check for 45+ : </span><input type='checkbox' name='checkFor45Plus'>
+<br/><br/>
+
+<input type="radio" name="whichDose" value="0" checked/>Both Doses
+<input type="radio" name="whichDose" value="1" />Dose 1 Only
+<input type="radio" name="whichDose" value="2" />Dose 2 Only
+
 <br/><br/>
 <span class='bold'>Frequency (Seconds) : </span><input type='number' name='frequency' min='10' value='20' />
 <br /><br />
@@ -50,6 +56,7 @@
 		let checkFor18Plus = $('[name=checkFor18Plus]').is(':checked');
 		let checkFor45Plus = $('[name=checkFor45Plus]').is(':checked');
 		let frequency = $('[name=frequency]').val();
+		let whichDose = parseInt($('[name=whichDose]:checked').val()); // 0 = Both, 1 = Dose1, 2 = Dose2
 		
 		if(pinCode.length === 0 && district.length === 0) {
 			alert('Either enter a Pincode or select a District');
@@ -63,8 +70,14 @@
 			alert('You have entered both the Pincode & District. Only Pincode will be considered.')
 			district = '';
 		}
+
+		if(frequency < 10) {
+			alert('Frequency less than 10 would just load up the server unnecessarily.');
+			return;
+		}
+
 		$('.console').empty();
-		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, $('.console'), $('.announcement'), playSound);
+		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, $('.console'), $('.announcement'), playSound);
 
 	}
 
