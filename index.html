@@ -25,7 +25,10 @@
 <input type="radio" name="whichDose" value="2" />Dose 2 Only
 
 <br/><br/>
+<span class='bold'>Min number of doses available : </span><input type='number' name='minDoses' min='0' value='0' />
+<br/><br/>
 <span class='bold'>Frequency (Seconds) : </span><input type='number' name='frequency' min='10' value='20' />
+
 <br /><br />
 <button onclick='validateAndRun()' >Run</button>
 <br /><br /><br/>
@@ -57,6 +60,8 @@
 		let checkFor45Plus = $('[name=checkFor45Plus]').is(':checked');
 		let frequency = $('[name=frequency]').val();
 		let whichDose = parseInt($('[name=whichDose]:checked').val()); // 0 = Both, 1 = Dose1, 2 = Dose2
+		let minDoses = $('[name=minDoses]').val();
+		console.log(minDoses);
 		
 		if(pinCode.length === 0 && district.length === 0) {
 			alert('Either enter a Pincode or select a District');
@@ -77,7 +82,7 @@
 		}
 
 		$('.console').empty();
-		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, $('.console'), $('.announcement'), playSound);
+		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, minDoses, $('.console'), $('.announcement'), playSound);
 
 	}
 
