@@ -7,7 +7,7 @@
 // @grant        none
 // ==/UserScript==
 
-window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, $appender, $announcement, onSuccess) => {
+window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, minDoses = 0, $appender, $announcement, onSuccess) => {
     /****************************Variables****************************************************/
     let searchByPinCode = pinCode.length > 0; // If false, it will search by the District ID
     let searchByDistrict = !searchByPinCode;
@@ -63,16 +63,16 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
 
     const formatDataToAlert = (data, $appender) => {
         let text = ``;
-        data.forEach( ({name, vaccine, available_capacity, min_age_limit}) => {
+        data.forEach( ({name, vaccine, available_capacity, min_age_limit, pincode}) => {
             text += `
-            Name : ${name}, Vaccine: ${vaccine}, Slots Available: ${available_capacity}, Age Group: ${min_age_limit}+`;
+            Name : ${name}, Vaccine: ${vaccine}, Slots Available: ${available_capacity}, Pin Code:${pincode}, Age Group: ${min_age_limit}+`;
         });
         return text;
     }
 
     const appendData = data => {
-        data.forEach( ({name, vaccine, available_capacity, min_age_limit}) => {
-            let text = `Name : ${name}, Vaccine: ${vaccine}, Slots Available: ${available_capacity}, Age Group: ${min_age_limit}+`;
+        data.forEach( ({name, vaccine, available_capacity, min_age_limit, pincode}) => {
+            let text = `Name : ${name}, Vaccine: ${vaccine}, Slots Available: ${available_capacity}, Pincode: ${pincode} Age Group: ${min_age_limit}+`;
             $appender.prepend('<p class="bold">' + text + '</p>')
         });
         $appender.prepend('<b>Congratulations !! Slots found at : </b>');
@@ -94,12 +94,12 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
                 let sessionsWithAvailableSlots = center.sessions.filter(session => {
                 	++totalSessions;
                 	if(whichDose === DOSE_1_ONLY) {
-                		return session.available_capacity_dose1 > 0
+                		return session.available_capacity_dose1 > minDoses
                 	} else if(whichDose === DOSE_2_ONLY) {
-                		return session.available_capacity_dose2 > 0
+                		return session.available_capacity_dose2 > minDoses
                 		
                 	}
-                	return session.available_capacity > 0
+                	return session.available_capacity > minDoses
                 });
                 if (sessionsWithAvailableSlots.length > 0) {
                     
