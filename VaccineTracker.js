@@ -7,7 +7,7 @@
 // @grant        none
 // ==/UserScript==
 
-window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, minDoses = 0, $appender, $announcement, onSuccess) => {
+window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, minDoses = 0, vaccineName = '', $appender, $announcement, onSuccess) => {
     /****************************Variables****************************************************/
     let searchByPinCode = pinCode.length > 0; // If false, it will search by the District ID
     let searchByDistrict = !searchByPinCode;
@@ -93,11 +93,18 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
             	totalCenters++;
                 let sessionsWithAvailableSlots = center.sessions.filter(session => {
                 	++totalSessions;
+
+                    if(vaccineName.length > 0) {
+                        // If the vaccine selected does not match the vaccine in the session, return false
+                        if((session.vaccine || "").toLowerCase() !== vaccineName.toLowerCase()) {
+                            return false;
+                        }
+                    }
+
                 	if(whichDose === DOSE_1_ONLY) {
                 		return session.available_capacity_dose1 > minDoses
                 	} else if(whichDose === DOSE_2_ONLY) {
                 		return session.available_capacity_dose2 > minDoses
-                		
                 	}
                 	return session.available_capacity > minDoses
                 });
