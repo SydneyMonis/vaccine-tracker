@@ -13,6 +13,13 @@
 <span class='bold'>Pincode : </span><input type='text' name='pinCode'> OR <span class='bold'>District : </span><select name='districtId' class='districtId'>
 	<option value=''></option>
 </select>
+<br /><br />
+<span class='bold'>Vaccine :</span>
+<select name='vaccineName'>
+    <option value=''>All</option>
+    <option value='covishield'>Covishield</option>
+    <option value='covaxin'>Covaxin</option>
+</select>
 
 <br/><br/>
 <span class='bold'>Check for 18+ : </span><input type='checkbox' name='checkFor18Plus' checked>
@@ -61,7 +68,7 @@
 		let frequency = $('[name=frequency]').val();
 		let whichDose = parseInt($('[name=whichDose]:checked').val()); // 0 = Both, 1 = Dose1, 2 = Dose2
 		let minDoses = $('[name=minDoses]').val();
-		console.log(minDoses);
+        let vaccineName = $('select[name=vaccineName]').val();
 		
 		if(pinCode.length === 0 && district.length === 0) {
 			alert('Either enter a Pincode or select a District');
@@ -82,7 +89,7 @@
 		}
 
 		$('.console').empty();
-		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, minDoses, $('.console'), $('.announcement'), playSound);
+		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, minDoses, vaccineName, $('.console'), $('.announcement'), playSound);
 
 	}
 
