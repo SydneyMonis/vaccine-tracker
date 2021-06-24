@@ -21,6 +21,15 @@
     <option value='covaxin'>Covaxin</option>
 </select>
 
+
+<br /><br />
+<span class='bold'>Fee Type :</span>
+<select name='feeType'>
+    <option value=''>Free & Paid</option>
+    <option value='free'>Free Only</option>
+    <option value='paid'>Paid Only</option>
+</select>
+
 <br/><br/>
 <span class='bold'>Check for 18+ : </span><input type='checkbox' name='checkFor18Plus' checked>
 <br/><br/>
@@ -69,6 +78,7 @@
 		let whichDose = parseInt($('[name=whichDose]:checked').val()); // 0 = Both, 1 = Dose1, 2 = Dose2
 		let minDoses = $('[name=minDoses]').val();
         let vaccineName = $('select[name=vaccineName]').val();
+        let feeType = $('select[name=feeType]').val();
 		
 		if(pinCode.length === 0 && district.length === 0) {
 			alert('Either enter a Pincode or select a District');
@@ -89,7 +99,7 @@
 		}
 
 		$('.console').empty();
-		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, minDoses, vaccineName, $('.console'), $('.announcement'), playSound);
+		initializeVaccineTracker(pinCode, district, date, frequency, checkFor18Plus, checkFor45Plus, whichDose, minDoses, vaccineName, feeType, $('.console'), $('.announcement'), playSound);
 
 	}
 

@@ -7,7 +7,7 @@
 // @grant        none
 // ==/UserScript==
 
-window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, minDoses = 0, vaccineName = '', $appender, $announcement, onSuccess) => {
+window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFor18Plus, alertFor45Plus, whichDose = 0, minDoses = 0, vaccineName = '', feeType = '', $appender, $announcement, onSuccess) => {
     /****************************Variables****************************************************/
     let searchByPinCode = pinCode.length > 0; // If false, it will search by the District ID
     let searchByDistrict = !searchByPinCode;
@@ -71,8 +71,9 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
     }
 
     const appendData = data => {
-        data.forEach( ({name, vaccine, available_capacity, min_age_limit, pincode}) => {
-            let text = `Name : ${name}, Vaccine: ${vaccine}, Slots Available: ${available_capacity}, Pincode: ${pincode} Age Group: ${min_age_limit}+`;
+        data.forEach( ({name, vaccine, available_capacity, min_age_limit, pincode, fee_type}) => {
+            console.log(data);
+            let text = `Name : ${name} | Vaccine: ${vaccine} | Slots Available: ${available_capacity} | Pincode: ${pincode} | Age Group: ${min_age_limit}+ | Fee Type: ${fee_type}`;
             $appender.prepend('<p class="bold">' + text + '</p>')
         });
         $appender.prepend('<b>Congratulations !! Slots found at : </b>');
@@ -90,6 +91,13 @@ window.initializeVaccineTracker = (pinCode, districtId, date, frequency, alertFo
             console.log(message);
         } else {
             availableCenters.forEach(center => {
+                if(feeType.length === 0) {
+                    // Do nothing, check for both paid & free
+                } else {
+                    if(String(center.fee_type).toLowerCase() !== feeType) {
+                        return true;
+                    }
+                }
             	totalCenters++;
                 let sessionsWithAvailableSlots = center.sessions.filter(session => {
                 	++totalSessions;
