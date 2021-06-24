@@ -5,6 +5,8 @@ A simple static Web App that will keep checking for available vaccine slots base
 - Search by Date.
 - Search by PinCode or District.
 - Search by Dose 1 or 2 or both.
+- Search by Vaccine.
+- Seearch by Fee Type (Free or Paid).
 - Search by Minimum number of doses (For when you don't want to be alerted for single slots being opened due to cancellations)
 - Set the frequency in seconds.
 - Search by Age Criteria (18+ or 45+).
